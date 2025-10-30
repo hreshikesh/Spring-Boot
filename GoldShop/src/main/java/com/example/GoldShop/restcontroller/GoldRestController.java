@@ -6,6 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.List;
+
 @RestController
 @RequestMapping("api/GoldShop/")
 public class GoldRestController {
@@ -25,11 +28,31 @@ public class GoldRestController {
         return result;
     }
 
-    @GetMapping("{id}")
+    @GetMapping("id/{id}")
     public String getGoldDetails(@PathVariable int id){
         GoldDto dto=service.getGoldDetailsById(id);
         return dto.toString();
     }
 
+    @GetMapping("company/{company}")
+    public List<GoldDto> findShopByCompany(@PathVariable String company){
+        log.info(company);
+            List<GoldDto> goldDtos=service.findByCompany(company);
+            if(goldDtos!=null && !goldDtos.isEmpty()){
+                return goldDtos;
+            }else{
+                return Collections.emptyList();
+            }
+    }
+
+    @GetMapping("companyName/{companyName}")
+    public String findDealerByCompanyName(@PathVariable String companyName){
+        String name=service.findDealerNameByCompany(companyName);
+        if(name!=null){
+            return name;
+        }else {
+            return "Name not found";
+        }
+    }
 
 }
