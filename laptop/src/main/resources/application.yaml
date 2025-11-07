@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: laptop
+
+  server:
+    port: 8080  # Sets the application's listening port
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/laptop_info
+    username: root
+    password: hrishi@sql
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update  # Options: none, update, create, create-drop
