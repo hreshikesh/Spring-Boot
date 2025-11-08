@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin("https://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @Slf4j
 @RequestMapping("/api/Laptop/")
@@ -16,18 +16,22 @@ public class LaptopRestController {
 
     private final LaptopService laptopService;
 
-    public LaptopRestController(LaptopService service) {
+    public LaptopRestController( LaptopService service) {
         this.laptopService = service;
     }
 
     @PostMapping("registerLaptop")
-    public ResponseEntity<String> saveLaptopDetails(LaptopDto dto) {
-          boolean isSaved=laptopService.registerLaptop(dto);
-          if(isSaved){
-              return ResponseEntity.ok("Register Successfully");
-          }else{
-              return ResponseEntity.badRequest().body("Registration Failed");
-          }
+    public ResponseEntity<String> saveLaptopDetails(@RequestBody LaptopDto dto) {
+        log.info(dto.toString());
+        if(dto!=null) {
+            boolean isSaved = laptopService.registerLaptop(dto);
+            if (isSaved) {
+                return ResponseEntity.ok("Register Successfully");
+            } else {
+                return ResponseEntity.badRequest().body("Registration Failed");
+            }
+        }
+        return ResponseEntity.badRequest().body("Registration Failed");
     }
 
     @DeleteMapping("deleteLaptop/{id}")
@@ -45,6 +49,27 @@ public class LaptopRestController {
         List<LaptopDto> laptopDtos=laptopService.getAllLaptop();
         if(!laptopDtos.isEmpty()){
             return ResponseEntity.ok(laptopDtos);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("getById/{id}")
+    public ResponseEntity<LaptopDto> findById(@PathVariable int id){
+        LaptopDto laptopDto=laptopService.findById(id);
+        if(laptopDto!=null){
+            return ResponseEntity.ok(laptopDto);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("updateLaptop")
+    public ResponseEntity<LaptopDto> updateLaptopDetails(@RequestBody LaptopDto laptopDto){
+        log.info(laptopDto.toString());
+        boolean isUpdated=laptopService.updateLaptop(laptopDto);
+        if(isUpdated){
+            return ResponseEntity.ok(laptopDto);
         }else{
             return ResponseEntity.notFound().build();
         }

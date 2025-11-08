@@ -3,7 +3,7 @@ spring:
     name: laptop
 
   server:
-    port: 8080  # Sets the application's listening port
+    port: 8080
 
   datasource:
     url: jdbc:mysql://localhost:3306/laptop_info
@@ -13,4 +13,4 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update  # Options: none, update, create, create-drop
+      ddl-auto: update
