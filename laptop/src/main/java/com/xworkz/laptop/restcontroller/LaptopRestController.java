@@ -2,8 +2,10 @@ package com.xworkz.laptop.restcontroller;
 
 import com.xworkz.laptop.dto.LaptopDto;
 import com.xworkz.laptop.service.LaptopService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,17 +23,19 @@ public class LaptopRestController {
     }
 
     @PostMapping("registerLaptop")
-    public ResponseEntity<String> saveLaptopDetails(@RequestBody LaptopDto dto) {
-        log.info(dto.toString());
-        if(dto!=null) {
+    public ResponseEntity<?> saveLaptopDetails(@Valid  @RequestBody LaptopDto dto, BindingResult result) {
+        if(result.hasErrors()){
+
+            List<String> serverErrors=result.getFieldErrors().stream().map(error->error.getDefaultMessage()).toList();
+
+            return  ResponseEntity.badRequest().body(serverErrors);
+        }
             boolean isSaved = laptopService.registerLaptop(dto);
             if (isSaved) {
                 return ResponseEntity.ok("Register Successfully");
             } else {
                 return ResponseEntity.badRequest().body("Registration Failed");
             }
-        }
-        return ResponseEntity.badRequest().body("Registration Failed");
     }
 
     @DeleteMapping("deleteLaptop/{id}")
