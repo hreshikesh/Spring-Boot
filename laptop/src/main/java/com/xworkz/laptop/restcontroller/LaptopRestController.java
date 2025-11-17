@@ -23,13 +23,7 @@ public class LaptopRestController {
     }
 
     @PostMapping("registerLaptop")
-    public ResponseEntity<?> saveLaptopDetails(@Valid  @RequestBody LaptopDto dto, BindingResult result) {
-        if(result.hasErrors()){
-
-            List<String> serverErrors=result.getFieldErrors().stream().map(error->error.getDefaultMessage()).toList();
-
-            return  ResponseEntity.badRequest().body(serverErrors);
-        }
+    public ResponseEntity<String> saveLaptopDetails(@Valid  @RequestBody LaptopDto dto) {
             boolean isSaved = laptopService.registerLaptop(dto);
             if (isSaved) {
                 return ResponseEntity.ok("Register Successfully");
