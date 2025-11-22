@@ -8,4 +8,6 @@ public interface AdminService {
     String findByEmail(String email);
 
     String generateOtp(String email);
+
+    String  verifyOtp(String email,String otp);
 }

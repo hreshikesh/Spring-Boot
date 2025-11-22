@@ -26,7 +26,9 @@ public class AdminRestController {
 
     @PostMapping("/sentOtp/{adminEmail}")
     public ResponseEntity<String> verifyAndSendOtp(@PathVariable String adminEmail, HttpSession httpSession) throws MessagingException {
-
+       if(adminEmail==null || adminEmail.isBlank()){
+           return  ResponseEntity.badRequest().body("Please Enter Email to proceed");
+       }
        String result= adminService.findByEmail(adminEmail);
        if(result.equals("Notfound")){
            return ResponseEntity.badRequest().body("Email Not Found");
@@ -38,6 +40,17 @@ public class AdminRestController {
             return ResponseEntity.ok("OTP Sent to Your Registered Mail");
        }
 
+    }
+
+    @PostMapping("/verifyotp/{adminEmail}/{otp}")
+    public ResponseEntity<String> verifyOtp(@PathVariable String adminEmail,@PathVariable String otp){
+       String isVerified= adminService.verifyOtp(adminEmail,otp);
+        switch (isVerified){
+            case "Valid":return ResponseEntity.ok("OTP Valid");
+            case "NotValid":return ResponseEntity.badRequest().body("OTP invalid Check Your OTP");
+            case "TimeOut":return ResponseEntity.status(408).body("OTP Timeout Please Resend Otp");
+            default: return ResponseEntity.ok("Error Verifying ...Please try again later");
+        }
     }
 
 }

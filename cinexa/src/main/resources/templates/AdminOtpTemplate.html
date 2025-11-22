@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -29,11 +29,11 @@
                     <p>Your OTP for admin login is:</p>
 
                     <div class="text-center my-3">
-                        <h1 class="display-4 fw-bold text-primary">${otp}</h1>
+                        <h1 th:text="${otp}"></h1>
                     </div>
 
                     <p class="text-muted">
-                        This OTP is valid for <strong>5 minutes</strong>.
+                        This OTP is valid for <strong>2 minutes</strong>.
                         Please do not share this with anyone.
                     </p>
                 </div>

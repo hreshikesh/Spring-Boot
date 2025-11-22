@@ -4,6 +4,7 @@ import com.xworkz.cinexa.entity.AdminEntity;
 import com.xworkz.cinexa.repository.AdminRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
 
@@ -35,7 +36,24 @@ public class AdminServiceImpl implements AdminService {
         Optional<AdminEntity> adminEntity=adminRepository.findByadminEmail(email);
         AdminEntity adminEntity1=adminEntity.get();
         adminEntity1.setOtp(otp.toString());
+        adminEntity1.setLocalDateTime(LocalDateTime.now().plusMinutes(2));
         adminRepository.save(adminEntity1);
         return  otp.toString();
+    }
+
+    @Override
+    public String verifyOtp(String email, String otp) {
+        Optional<AdminEntity> adminEntity = adminRepository.findByadminEmail(email);
+
+            if (LocalDateTime.now().isBefore(adminEntity.get().getLocalDateTime())) {
+                if (otp.equals(adminEntity.get().getOtp())) {
+                    return "Valid";
+                } else {
+                    return "NotValid";
+                }
+            } else {
+                return "TimeOut";
+            }
+
     }
 }
