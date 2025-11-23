@@ -2,6 +2,8 @@ package com.xworkz.cinexa.service;
 
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.TimeoutException;
+
 
 public interface AdminService {
 
@@ -9,5 +11,5 @@ public interface AdminService {
 
     String generateOtp(String email);
 
-    String  verifyOtp(String email,String otp);
+    String  verifyOtp(String email,String otp) throws TimeoutException;
 }

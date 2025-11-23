@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
+import java.util.concurrent.TimeoutException;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -22,7 +23,7 @@ public class AdminServiceImpl implements AdminService {
         if (adminRepository.findByadminEmail(email).isPresent()) {
             return "Found";
         } else {
-            return "Notfound";
+             throw  new RuntimeException("Email Not Found");
         }
     }
 
@@ -42,7 +43,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public String verifyOtp(String email, String otp) {
+    public String verifyOtp(String email, String otp) throws TimeoutException {
         Optional<AdminEntity> adminEntity = adminRepository.findByadminEmail(email);
 
             if (LocalDateTime.now().isBefore(adminEntity.get().getLocalDateTime())) {
@@ -52,7 +53,7 @@ public class AdminServiceImpl implements AdminService {
                     return "NotValid";
                 }
             } else {
-                return "TimeOut";
+                throw new TimeoutException("OTP Timeout Please Resend Otp");
             }
 
     }
