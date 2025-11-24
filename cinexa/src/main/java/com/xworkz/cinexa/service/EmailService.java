@@ -26,7 +26,6 @@ public class EmailService {
         Context context=new Context();
         context.setVariable("otp",otp);
         String html= templateEngine.process("AdminOtpTemplate",context);
-        System.out.println(html);
         MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, "UTF-8");
             helper.setTo(email);
