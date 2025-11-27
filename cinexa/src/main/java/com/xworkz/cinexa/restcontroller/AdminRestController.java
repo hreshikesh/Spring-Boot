@@ -13,7 +13,6 @@ import java.util.concurrent.TimeoutException;
 @RestController
 @Slf4j
 @RequestMapping("/api/Admin")
-@CrossOrigin("http://localhost:3000/")
 public class AdminRestController {
 
 
