@@ -46,7 +46,7 @@ public class AdminServiceImpl implements AdminService {
     public String verifyOtp(String email, String otp) throws TimeoutException {
         Optional<AdminEntity> adminEntity = adminRepository.findByadminEmail(email);
 
-            if (LocalDateTime.now().isBefore(adminEntity.get().getLocalDateTime())) {
+            if (adminEntity.get().getLocalDateTime()!=null && LocalDateTime.now().isBefore(adminEntity.get().getLocalDateTime())) {
                 if (otp.equals(adminEntity.get().getOtp())) {
                     return "Valid";
                 } else {

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/cinexa")
 public class CinexaRestController {
+
+
     @PostMapping("/logout")
     public void logOut(HttpSession httpSession){
         httpSession.invalidate();
