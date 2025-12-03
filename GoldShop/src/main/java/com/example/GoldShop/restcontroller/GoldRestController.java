@@ -4,11 +4,10 @@ import com.example.GoldShop.dto.GoldDto;
 import com.example.GoldShop.service.GoldService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("api/GoldShop/")
 public class GoldRestController {
@@ -28,20 +27,20 @@ public class GoldRestController {
         return result;
     }
 
-    @GetMapping("id/{id}")
-    public String getGoldDetails(@PathVariable int id){
+    @GetMapping(value = "id/{id}",produces = "application/json")
+    public ResponseEntity<GoldDto> getGoldDetails(@PathVariable int id){
         GoldDto dto=service.getGoldDetailsById(id);
-        return dto.toString();
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("company/{company}")
-    public List<GoldDto> findShopByCompany(@PathVariable String company){
+    public ResponseEntity<List<GoldDto>> findShopByCompany(@PathVariable String company){
         log.info(company);
             List<GoldDto> goldDtos=service.findByCompany(company);
             if(goldDtos!=null && !goldDtos.isEmpty()){
-                return goldDtos;
+                return ResponseEntity.ok(goldDtos);
             }else{
-                return Collections.emptyList();
+                return  ResponseEntity.noContent().build();
             }
     }
 
