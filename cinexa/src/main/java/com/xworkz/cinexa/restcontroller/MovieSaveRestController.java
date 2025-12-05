@@ -6,6 +6,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/api/movie")
 public class MovieSaveRestController {
@@ -17,7 +19,7 @@ public class MovieSaveRestController {
     }
 
     @PostMapping("/saveMovie")
-    public ResponseEntity<String> saveMovieDetails(@ModelAttribute @Valid MovieDto movieDto){
+    public ResponseEntity<String> saveMovieDetails(@ModelAttribute @Valid MovieDto movieDto) throws IOException {
         return movieService.saveMovie(movieDto) ? ResponseEntity.ok("Movie Details Successfully Saved") :
         ResponseEntity.badRequest().body("Error in saving Deatils");
     }
