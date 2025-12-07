@@ -22,10 +22,6 @@ public class MovieDto {
     @NotNull(message = "Movie Langauage Should not be empty")
     private List<String> movieLanguage;
 
-    @NotNull(message = "Movie budget cannot be empty")
-    @Min(value = 10,message = "Budget minijmum value is 10")
-    @Max(value = 100,message = "Budget Max value is 100")
-    private long movieBudget;
 
     @NotNull(message = "Movie image should be uploaded")
     private MultipartFile movieImage;

@@ -28,7 +28,6 @@ public class MovieServiceImpl  implements  MovieService{
             MovieEntity movieEntity = new MovieEntity();
             movieEntity.setMovieName(movieDto.getMovieName());
             movieEntity.setMovieLanguage(movieDto.getMovieLanguage());
-            movieEntity.setMovieBudget(movieDto.getMovieBudget());
             movieEntity.setMoviePrice(movieDto.getMoviePrice());
 
             String movieUpdatedName=imageService.saveImageLocally(movieDto.getMovieName(), movieDto.getMovieImage());

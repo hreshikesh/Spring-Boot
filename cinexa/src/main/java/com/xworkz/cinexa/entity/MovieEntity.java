@@ -29,9 +29,6 @@ public class MovieEntity {
     @ElementCollection
     private List<String> movieLanguage;
 
-    @Column(name = "movie_budget")
-    private long movieBudget;
-
 
     @OneToOne(mappedBy = "movie", cascade = CascadeType.ALL,orphanRemoval = true)
     private MovieImageEntity movieImageEntity;

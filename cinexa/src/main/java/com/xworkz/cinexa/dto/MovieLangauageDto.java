@@ -16,5 +16,5 @@ public class MovieLangauageDto {
     private int id;
 
 
-    private String movieName;
+    private String movieLanguage;
 }

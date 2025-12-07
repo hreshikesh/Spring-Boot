@@ -16,5 +16,5 @@ public class MovieLangauageEntity {
     private int id;
 
     @Column(name = "movie_language")
-    private String movieName;
+    private String movieLanguage;
 }
