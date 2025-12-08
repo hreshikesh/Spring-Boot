@@ -31,14 +31,12 @@ public class ImageService {
 
     public void previewMovieImage(String imagePath,HttpServletResponse response) throws IOException {
         File file=new File("D:\\unity_hospital\\"+imagePath);
-        try{
+
             InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
             ServletOutputStream outputStream = response.getOutputStream();
             IOUtils.copy(inputStream, outputStream);
             response.flushBuffer();
-        }catch (IOException ex){
-            throw new IOException("Image not found");
-        }
+
     }
 
 }
