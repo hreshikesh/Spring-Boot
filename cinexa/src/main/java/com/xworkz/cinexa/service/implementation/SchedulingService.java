@@ -1,4 +1,4 @@
-package com.xworkz.cinexa.service;
+package com.xworkz.cinexa.service.implementation;
 
 import com.xworkz.cinexa.entity.AdminEntity;
 import com.xworkz.cinexa.repository.AdminRepository;

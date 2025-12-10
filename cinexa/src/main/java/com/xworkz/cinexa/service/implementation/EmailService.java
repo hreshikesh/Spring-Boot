@@ -1,4 +1,4 @@
-package com.xworkz.cinexa.service;
+package com.xworkz.cinexa.service.implementation;
 
 
 import jakarta.mail.MessagingException;

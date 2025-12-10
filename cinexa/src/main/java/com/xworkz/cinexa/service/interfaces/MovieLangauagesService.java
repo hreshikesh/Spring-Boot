@@ -1,4 +1,4 @@
-package com.xworkz.cinexa.service;
+package com.xworkz.cinexa.service.interfaces;
 
 
 import com.xworkz.cinexa.dto.MovieLangauageDto;

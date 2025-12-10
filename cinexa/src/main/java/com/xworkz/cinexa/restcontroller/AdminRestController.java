@@ -1,7 +1,7 @@
 package com.xworkz.cinexa.restcontroller;
 
-import com.xworkz.cinexa.service.AdminService;
-import com.xworkz.cinexa.service.EmailService;
+import com.xworkz.cinexa.service.interfaces.AdminService;
+import com.xworkz.cinexa.service.implementation.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;

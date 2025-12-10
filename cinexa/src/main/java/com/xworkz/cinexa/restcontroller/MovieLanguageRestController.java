@@ -1,7 +1,7 @@
 package com.xworkz.cinexa.restcontroller;
 
 import com.xworkz.cinexa.dto.MovieLangauageDto;
-import com.xworkz.cinexa.service.MovieLangauagesService;
+import com.xworkz.cinexa.service.interfaces.MovieLangauagesService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

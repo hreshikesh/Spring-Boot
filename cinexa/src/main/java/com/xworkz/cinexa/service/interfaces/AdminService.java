@@ -1,6 +1,4 @@
-package com.xworkz.cinexa.service;
-
-import org.springframework.stereotype.Service;
+package com.xworkz.cinexa.service.interfaces;
 
 import java.util.concurrent.TimeoutException;
 

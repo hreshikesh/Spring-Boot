@@ -1,7 +1,8 @@
-package com.xworkz.cinexa.service;
+package com.xworkz.cinexa.service.implementation;
 
 import com.xworkz.cinexa.entity.AdminEntity;
 import com.xworkz.cinexa.repository.AdminRepository;
+import com.xworkz.cinexa.service.interfaces.AdminService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

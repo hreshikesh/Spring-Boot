@@ -1,15 +1,16 @@
-package com.xworkz.cinexa.service;
+package com.xworkz.cinexa.service.implementation;
 
 import com.xworkz.cinexa.dto.MovieDto;
 import com.xworkz.cinexa.entity.MovieEntity;
 import com.xworkz.cinexa.entity.MovieImageEntity;
 import com.xworkz.cinexa.repository.MovieRepository;
+import com.xworkz.cinexa.service.interfaces.MovieService;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
 @Service
-public class MovieServiceImpl  implements  MovieService{
+public class MovieServiceImpl  implements MovieService {
 
     private final MovieRepository movieRepository;
 
@@ -49,5 +50,10 @@ public class MovieServiceImpl  implements  MovieService{
         }
 
         throw new RuntimeException("Error in saving movie details");
+    }
+
+    @Override
+    public long getMovieCount() {
+        return movieRepository.count();
     }
 }
