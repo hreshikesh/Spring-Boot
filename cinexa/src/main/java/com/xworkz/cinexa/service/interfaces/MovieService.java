@@ -1,6 +1,7 @@
 package com.xworkz.cinexa.service.interfaces;
 
 import com.xworkz.cinexa.dto.MovieDto;
+import org.springframework.data.domain.Page;
 
 import java.io.IOException;
 
@@ -9,5 +10,8 @@ public interface MovieService {
     boolean saveMovie(MovieDto movieDto) throws IOException;
 
     long getMovieCount();
+
+    Page<MovieDto> fetchAllMovie(int page,int size);
+
 
 }

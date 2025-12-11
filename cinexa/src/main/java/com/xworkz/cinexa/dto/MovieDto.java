@@ -30,4 +30,6 @@ public class MovieDto {
     @Min(value = 50,message = "Minimum movie ticket price is 50")
     @Max(value = 300,message = "Movie max price is 300")
     private int moviePrice;
+
+    private String imageName;
 }

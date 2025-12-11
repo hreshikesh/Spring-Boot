@@ -5,11 +5,17 @@ import com.xworkz.cinexa.entity.MovieEntity;
 import com.xworkz.cinexa.entity.MovieImageEntity;
 import com.xworkz.cinexa.repository.MovieRepository;
 import com.xworkz.cinexa.service.interfaces.MovieService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
 @Service
+@Slf4j
 public class MovieServiceImpl  implements MovieService {
 
     private final MovieRepository movieRepository;
@@ -55,5 +61,27 @@ public class MovieServiceImpl  implements MovieService {
     @Override
     public long getMovieCount() {
         return movieRepository.count();
+    }
+
+
+    private MovieDto convertToDto(MovieEntity movieEntity){
+        MovieDto movieDto=new MovieDto();
+        movieDto.setMovieName(movieEntity.getMovieName());
+        movieDto.setMovieLanguage(movieEntity.getMovieLanguage());
+        movieDto.setImageName(movieEntity.getMovieImageEntity().getImageName());
+        movieDto.setMoviePrice(movieDto.getMoviePrice());
+        return movieDto;
+    }
+
+    @Override
+    public Page<MovieDto> fetchAllMovie(int page,int size) {
+        Pageable pageable= PageRequest.of(page, size);
+        Page<MovieEntity> movieEntityPage= movieRepository.findAll(pageable);
+        log.info(movieEntityPage.getContent().toString());
+        if(movieEntityPage.isEmpty()){
+            throw new IllegalArgumentException("NO Movies Found");
+        }else {
+           return movieEntityPage.map(movieEntity -> convertToDto(movieEntity));
+        }
     }
 }

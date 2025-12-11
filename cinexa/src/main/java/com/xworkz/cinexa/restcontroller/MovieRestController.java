@@ -3,6 +3,7 @@ package com.xworkz.cinexa.restcontroller;
 import com.xworkz.cinexa.dto.MovieDto;
 import com.xworkz.cinexa.service.interfaces.MovieService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,5 +28,11 @@ public class MovieRestController {
     @GetMapping("/countMovies")
     public ResponseEntity<Long> getMovieCount(){
         return ResponseEntity.ok(movieService.getMovieCount());
+    }
+
+    @GetMapping("/getAllMovies")
+    public ResponseEntity<Page<MovieDto>> getAllMovies(@RequestParam(defaultValue = "0") int page,
+                                                       @RequestParam(defaultValue = "5") int size){
+        return ResponseEntity.ok(movieService.fetchAllMovie(page,size));
     }
 }
