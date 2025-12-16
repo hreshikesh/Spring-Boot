@@ -36,7 +36,7 @@ public class AdminRestController {
            String otp=adminService.generateOtp(adminEmail);
            log.info(otp);
            emailService.sendAdminOtpMail(adminEmail,otp);
-            return ResponseEntity.ok("OTP Sent to Your Registered Mail");
+           return ResponseEntity.ok("OTP Sent to Your Registered Mail");
     }
 
     @PostMapping("/verifyotp/{adminEmail}/{otp}")

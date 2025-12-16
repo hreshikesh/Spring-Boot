@@ -2,6 +2,7 @@ package com.xworkz.cinexa.restcontroller;
 
 import com.xworkz.cinexa.dto.MovieDto;
 import com.xworkz.cinexa.service.interfaces.MovieService;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class MovieRestController {
     }
 
     @PostMapping("/saveMovie")
-    public ResponseEntity<String> saveMovieDetails(@ModelAttribute @Valid MovieDto movieDto) throws IOException {
+    public ResponseEntity<String> saveMovieDetails(@ModelAttribute @Valid MovieDto movieDto) throws IOException, MessagingException {
         return movieService.saveMovie(movieDto) ? ResponseEntity.ok("Movie Details Successfully Saved") :
         ResponseEntity.badRequest().body("Error in saving Deatils");
     }

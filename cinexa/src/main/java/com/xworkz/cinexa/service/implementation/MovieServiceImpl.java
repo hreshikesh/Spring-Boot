@@ -5,9 +5,9 @@ import com.xworkz.cinexa.entity.MovieEntity;
 import com.xworkz.cinexa.entity.MovieImageEntity;
 import com.xworkz.cinexa.repository.MovieRepository;
 import com.xworkz.cinexa.service.interfaces.MovieService;
+import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,14 +22,17 @@ public class MovieServiceImpl  implements MovieService {
 
     private final ImageService imageService;
 
-    public MovieServiceImpl(MovieRepository movieRepository, ImageService imageService) {
+    private final EmailService emailService;
+
+    public MovieServiceImpl(MovieRepository movieRepository, ImageService imageService, EmailService emailService) {
         this.movieRepository = movieRepository;
         this.imageService = imageService;
+        this.emailService = emailService;
     }
 
 
     @Override
-    public boolean saveMovie(MovieDto movieDto) throws IOException {
+    public boolean saveMovie(MovieDto movieDto) throws IOException, MessagingException {
         if (movieDto != null) {
 
             MovieEntity movieEntity = new MovieEntity();
@@ -42,7 +45,7 @@ public class MovieServiceImpl  implements MovieService {
             MovieImageEntity imageEntity = new MovieImageEntity();
             imageEntity.setImageName(movieUpdatedName);
             imageEntity.setImageOriginalName(movieDto.getMovieImage().getOriginalFilename());
-            imageEntity.setImagePath("ImagePath");
+            imageEntity.setImagePath("D:\\cinexa"+movieUpdatedName);
             imageEntity.setSize(movieDto.getMovieImage().getSize());
 
 
@@ -51,6 +54,8 @@ public class MovieServiceImpl  implements MovieService {
             movieEntity.setMovieImageEntity(imageEntity);
 
             movieRepository.save(movieEntity);
+
+            emailService.sendSaveMovieEmail(movieEntity);
 
             return true;
         }

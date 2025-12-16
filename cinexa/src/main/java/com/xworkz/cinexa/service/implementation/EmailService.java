@@ -1,14 +1,18 @@
 package com.xworkz.cinexa.service.implementation;
 
 
+import com.xworkz.cinexa.entity.MovieEntity;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
+
+import java.io.File;
 
 @Service
 public class EmailService {
@@ -32,6 +36,33 @@ public class EmailService {
             helper.setSubject("Your OTP for Admin Login");
             helper.setText(html, true);
             javaMailSender.send(message);
+    }
+
+
+    @Async
+    public void sendSaveMovieEmail(MovieEntity movieEntity) throws MessagingException {
+        Context context=new Context();
+        context.setVariable("movieName",movieEntity.getMovieName());
+        context.setVariable("movieLanguage",movieEntity.getMovieLanguage().toString());
+        context.setVariable("moviePrice",movieEntity.getMoviePrice());
+
+        String html=templateEngine.process("MovieSaveTemplate",context);
+
+        MimeMessage message = javaMailSender.createMimeMessage();
+
+        MimeMessageHelper helper = new MimeMessageHelper(message,MimeMessageHelper.MULTIPART_MODE_MIXED);
+
+        helper.setTo("ailhreshikesh@gmail.com");
+        helper.setSubject("Movie Details Saved Successfully");
+        helper.setText(html,true);
+
+        FileSystemResource resource=new FileSystemResource(new File("D:\\cinexa\\"+movieEntity.getMovieImageEntity().getImageName()));
+
+        helper.addInline("movieImage",resource);
+
+
+        javaMailSender.send(message);
+
     }
 
 }
