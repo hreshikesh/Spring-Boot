@@ -3,6 +3,8 @@ package com.xworkz.cinexa.service.implementation;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,14 +30,16 @@ public class ImageService {
 
     }
 
-    public void previewMovieImage(String imagePath,HttpServletResponse response) throws IOException {
-        File file=new File("D:\\unity_hospital\\"+imagePath);
+    public ResponseEntity<byte[]> previewMovieImage(String imagePath) throws IOException {
+        File file=new File("D:\\cinexa\\"+imagePath);
+        byte[] imageBytes = Files.readAllBytes(file.toPath());
 
-            InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
-            ServletOutputStream outputStream = response.getOutputStream();
-            IOUtils.copy(inputStream, outputStream);
-            response.flushBuffer();
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(imageBytes);
 
     }
+
+
 
 }

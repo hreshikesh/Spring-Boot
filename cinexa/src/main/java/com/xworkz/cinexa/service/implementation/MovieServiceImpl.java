@@ -7,12 +7,14 @@ import com.xworkz.cinexa.repository.MovieRepository;
 import com.xworkz.cinexa.service.interfaces.MovieService;
 import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -71,10 +73,11 @@ public class MovieServiceImpl  implements MovieService {
 
     private MovieDto convertToDto(MovieEntity movieEntity){
         MovieDto movieDto=new MovieDto();
+        movieDto.setId(movieEntity.getId());
         movieDto.setMovieName(movieEntity.getMovieName());
         movieDto.setMovieLanguage(movieEntity.getMovieLanguage());
         movieDto.setImageName(movieEntity.getMovieImageEntity().getImageName());
-        movieDto.setMoviePrice(movieDto.getMoviePrice());
+        movieDto.setMoviePrice(movieEntity.getMoviePrice());
         return movieDto;
     }
 
@@ -87,6 +90,18 @@ public class MovieServiceImpl  implements MovieService {
             throw new IllegalArgumentException("NO Movies Found");
         }else {
            return movieEntityPage.map(movieEntity -> convertToDto(movieEntity));
+        }
+    }
+
+    @Override
+    public MovieDto findMovieById(int id) {
+        Optional<MovieEntity> optionalMovieEntity=movieRepository.findById(id);
+        if(optionalMovieEntity.isPresent()){
+            MovieEntity movieEntity=optionalMovieEntity.get();
+
+            return convertToDto(movieEntity);
+        }else{
+            throw new RuntimeException("Movie Details Not Found");
         }
     }
 }

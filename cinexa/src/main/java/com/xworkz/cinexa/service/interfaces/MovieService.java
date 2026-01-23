@@ -14,5 +14,7 @@ public interface MovieService {
 
     Page<MovieDto> fetchAllMovie(int page,int size);
 
+    MovieDto findMovieById(int id);
+
 
 }
