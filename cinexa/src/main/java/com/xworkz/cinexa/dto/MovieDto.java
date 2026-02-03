@@ -19,6 +19,7 @@ public class MovieDto {
 
     private int id;
 
+
     @NotNull(message = "Movie name cannot be empty")
     @Size(min = 3,max = 20,message = "Movie name  length should be about 3 and 20")
     private String movieName;
