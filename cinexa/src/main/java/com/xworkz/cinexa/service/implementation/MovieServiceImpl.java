@@ -83,14 +83,13 @@ public class MovieServiceImpl  implements MovieService {
 
     @Override
     public Page<MovieDto> fetchAllMovie(int page,int size) {
-        Pageable pageable= PageRequest.of(page, size);
-        Page<MovieEntity> movieEntityPage= movieRepository.findAll(pageable);
-        log.info(movieEntityPage.getContent().toString());
-        if(movieEntityPage.isEmpty()){
-            throw new IllegalArgumentException("NO Movies Found");
-        }else {
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<MovieEntity> movieEntityPage = movieRepository.findAll(pageable);
+
+        log.info("Movies fetched: {}", movieEntityPage.getNumberOfElements());
            return movieEntityPage.map(movieEntity -> convertToDto(movieEntity));
-        }
+
     }
 
     @Override

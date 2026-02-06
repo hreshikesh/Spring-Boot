@@ -31,4 +31,7 @@ public class BookingEntity {
     @ToString.Exclude
     private MovieEntity movie;
 
+    @Column(name = "total_price")
+    private int price;
+
 }

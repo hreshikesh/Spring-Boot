@@ -10,6 +10,8 @@ import java.util.List;
 @NoArgsConstructor
 public class BookingDto {
     private int movieId;
+    private String userEmail;
+    private int price;
     private LocalDate bookingDate;
     private List<String> selectedSeats;
 }

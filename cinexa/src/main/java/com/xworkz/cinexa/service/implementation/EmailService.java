@@ -1,6 +1,7 @@
 package com.xworkz.cinexa.service.implementation;
 
 
+import com.xworkz.cinexa.dto.BookingDto;
 import com.xworkz.cinexa.entity.MovieEntity;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -60,6 +61,31 @@ public class EmailService {
 
         helper.addInline("movieImage",resource);
 
+
+        javaMailSender.send(message);
+
+    }
+
+    @Async
+    public void sendBookingEmail(BookingDto bookingDto,MovieEntity movieEntity) throws MessagingException {
+        Context context=new Context();
+        context.setVariable("movieName",movieEntity.getMovieName());
+        context.setVariable("date",bookingDto.getBookingDate());
+        context.setVariable("selectedSeat",bookingDto.getSelectedSeats());
+        context.setVariable("totalPrice",bookingDto.getPrice());
+
+        String html=templateEngine.process("BookingTemplate",context);
+
+        MimeMessage message = javaMailSender.createMimeMessage();
+
+        MimeMessageHelper helper = new MimeMessageHelper(message,MimeMessageHelper.MULTIPART_MODE_MIXED);
+
+        helper.setTo(bookingDto.getUserEmail());
+        helper.setSubject("Booking SuccessfullyDone");
+        helper.setText(html,true);
+
+
+        helper.addInline("movieImage",new FileSystemResource(new File("D:\\cinexa\\"+movieEntity.getMovieImageEntity().getImageName())));
 
         javaMailSender.send(message);
 
