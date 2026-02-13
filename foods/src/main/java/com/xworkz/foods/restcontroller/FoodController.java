@@ -17,5 +17,12 @@ public class FoodController {
         log.info("save method");
         log.info(userDto.getUserName());
         log.info(userDto.getUserEmail());
+        log.info(userDto.getUserPassword());
+        log.info(userDto.getUserGender());
+        log.info(userDto.getUserSkills());
+        log.info(userDto.getUserCity());
+        log.info(String.valueOf(userDto.getUserAge()));
+        log.info(userDto.getUserCountry());
+        log.info(String.valueOf(userDto.getUserPhone()));
     }
 }
