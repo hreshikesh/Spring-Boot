@@ -11,6 +11,6 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI SwaggerOpenAPI(){
         return new OpenAPI().info(new Info().title("Cinexa Movie Management Application").
-                description("This is  a movie management System"));
+                description("This is  a movie management System  -Cinexa"));
     }
 }
