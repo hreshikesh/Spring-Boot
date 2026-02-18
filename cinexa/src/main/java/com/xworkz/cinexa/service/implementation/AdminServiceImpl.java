@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -30,17 +31,10 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public String generateOtp(String email) {
-        StringBuffer otp = new StringBuffer(6);
+
         Random random = new Random();
-        for (int i = 0; i < 6; i++) {
-            otp.append(random.nextInt(10));
-        }
-        Optional<AdminEntity> adminEntity=adminRepository.findByadminEmail(email);
-        AdminEntity adminEntity1=adminEntity.get();
-        adminEntity1.setOtp(otp.toString());
-        adminEntity1.setLocalDateTime(LocalDateTime.now().plusMinutes(2));
-        adminRepository.save(adminEntity1);
-        return  otp.toString();
+
+        return random.ints().mapToObj(String::valueOf).collect(Collectors.joining());
     }
 
     @Override
