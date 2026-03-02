@@ -33,8 +33,20 @@ public class AdminServiceImpl implements AdminService {
     public String generateOtp(String email) {
 
         Random random = new Random();
+        StringBuilder builder=new StringBuilder();
+        for (int i = 0; i <6 ; i++) {
+            builder.append(random.nextInt(10));
+        }
 
-        return random.ints().mapToObj(String::valueOf).collect(Collectors.joining());
+
+        String otp= builder.toString();
+        Optional<AdminEntity> adminEntity=adminRepository.findByadminEmail(email);
+        if(adminEntity.isPresent()) {
+            adminEntity.get().setOtp(otp);
+            adminEntity.get().setLocalDateTime(LocalDateTime.now().plusMinutes(2));
+            adminRepository.save(adminEntity.get());
+        }
+      return otp;
     }
 
     @Override
