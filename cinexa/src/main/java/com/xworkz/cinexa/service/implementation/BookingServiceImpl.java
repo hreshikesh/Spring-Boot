@@ -28,6 +28,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public boolean save(BookingDto dto) throws MessagingException {
+
         if (dto == null) {
             throw new RuntimeException("Booking data is empty");
         }
@@ -44,10 +45,9 @@ public class BookingServiceImpl implements BookingService {
         log.info(dto.getUserEmail());
         entity.setSelectedSeats(dto.getSelectedSeats());
         entity.setMovie(optionalMovie.get());
+        entity.setPrice(dto.getPrice());
 
         bookingRepository.save(entity);
-
-//Async
         emailService.sendBookingEmail(dto,optionalMovie.get());
 
         return true;
