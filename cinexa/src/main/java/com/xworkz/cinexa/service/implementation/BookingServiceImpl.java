@@ -10,7 +10,12 @@ import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -51,5 +56,18 @@ public class BookingServiceImpl implements BookingService {
         emailService.sendBookingEmail(dto,optionalMovie.get());
 
         return true;
+    }
+
+    @Override
+    public List<String> getAllBookedSeat(LocalDate date, int movieId) {
+        log.info(String.valueOf(date)+String.valueOf(movieId));
+       List<BookingEntity> bookingEntityList= bookingRepository.findAll();
+
+       if(!bookingEntityList.isEmpty()){
+          return bookingEntityList.stream()
+                  .filter(bookingEntity -> bookingEntity.getBookingDate().isEqual(date) && bookingEntity.getMovie().getId()==movieId)
+                   .flatMap(bookingEntity -> bookingEntity.getSelectedSeats().stream()).toList();
+       }
+        return List.of();
     }
 }

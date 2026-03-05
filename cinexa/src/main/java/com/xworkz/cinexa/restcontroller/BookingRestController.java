@@ -8,6 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.List;
+
+
 @RestController
 @RequestMapping("/api/booking")
 @Slf4j
@@ -24,6 +28,17 @@ public class BookingRestController {
         log.info(String.valueOf(bookingDto.getPrice()));
         return bookingService.save(bookingDto) ? ResponseEntity.ok().body("Seats Successfully Booked") :
                 ResponseEntity.badRequest().body("Error in Booking");
+    }
+
+
+    @GetMapping("/getAllBookedSeats/{date}/{movieId}")
+    public ResponseEntity<List<String>> getAllBookedSeatOfMovie(@PathVariable LocalDate date, @PathVariable int movieId){
+        log.info(String.valueOf(date)+String.valueOf(movieId));
+         List<String> seats=bookingService.getAllBookedSeat(date,movieId);
+         if(!seats.isEmpty()){
+             return ResponseEntity.ok().body(seats);
+         }
+            throw new RuntimeException("Something Went wrong");
     }
 
 
