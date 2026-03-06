@@ -61,11 +61,10 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<String> getAllBookedSeat(LocalDate date, int movieId) {
         log.info(String.valueOf(date)+String.valueOf(movieId));
-       List<BookingEntity> bookingEntityList= bookingRepository.findAll();
+       List<BookingEntity> bookingEntityList= bookingRepository.findByDateAndMovieId(date,movieId);
 
        if(!bookingEntityList.isEmpty()){
           return bookingEntityList.stream()
-                  .filter(bookingEntity -> bookingEntity.getBookingDate().isEqual(date) && bookingEntity.getMovie().getId()==movieId)
                    .flatMap(bookingEntity -> bookingEntity.getSelectedSeats().stream()).toList();
        }
         return List.of();
