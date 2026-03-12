@@ -33,7 +33,7 @@ public class BookingRestController {
 
     @GetMapping("/getAllBookedSeats/{date}/{movieId}")
     public ResponseEntity<List<String>> getAllBookedSeatOfMovie(@PathVariable LocalDate date, @PathVariable int movieId){
-        log.info(String.valueOf(date)+String.valueOf(movieId));
+
          List<String> seats=bookingService.getAllBookedSeat(date,movieId);
          if(!seats.isEmpty()){
              return ResponseEntity.ok().body(seats);
