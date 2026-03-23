@@ -27,6 +27,7 @@ public class BookingRestController {
     public ResponseEntity<String> movieSeatBooking(@RequestBody @Valid BookingDto bookingDto) throws MessagingException {
         log.info(String.valueOf(bookingDto.getPrice()));
         return bookingService.save(bookingDto) ? ResponseEntity.ok().body("Seats Successfully Booked") :
+
                 ResponseEntity.badRequest().body("Error in Booking");
     }
 
