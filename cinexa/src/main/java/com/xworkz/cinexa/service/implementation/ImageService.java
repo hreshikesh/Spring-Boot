@@ -22,6 +22,7 @@ public class ImageService {
            byte[] filePart = file.getBytes();
            Path path = Paths.get("D:\\cinexa\\" + name + System.currentTimeMillis() + ".jpg");
            Files.write(path, filePart);
+
            return path.getFileName().toString();
        }catch (Exception ex){
            throw  new IOException("Error in uploading file");
