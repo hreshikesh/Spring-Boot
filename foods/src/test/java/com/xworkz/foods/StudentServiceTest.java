@@ -2,7 +2,8 @@ package com.xworkz.foods;
 
 import com.xworkz.foods.Service.StudentService;
 import com.xworkz.foods.dto.Student;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class StudentServiceTest {
 
